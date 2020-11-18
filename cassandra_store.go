@@ -133,7 +133,7 @@ func (d *defaultMovieStore) Update(movie *Movie) (*Movie, error) {
 	}
 	q = q + strings.Join(parts, ",") + " where id = ?"
 	values = append(values, movie.Id)
-	err := d.cql.Query(q, values).Exec()
+	err := d.cql.Query(q, values...).Exec()
 	if err != nil {
 		return nil, err
 	}
