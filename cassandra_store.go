@@ -131,7 +131,7 @@ func (d *defaultMovieStore) Update(movie *Movie) (*Movie, error) {
 	if len(parts) <= 0 {
 		return nil, errors.New("Nothing to update")
 	}
-	q = q + strings.Join(parts, " , ") + " WHERE id = $"
+	q = q + strings.Join(parts, " , ") + " WHERE id = ?"
 	values = append(values, movie.Id)
 	err := d.cql.Query(q, values).Exec()
 	if err != nil {
@@ -149,5 +149,4 @@ func (d *defaultMovieStore) Delete(id int64) error {
 		return err
 	}
 	return nil
-
 }
