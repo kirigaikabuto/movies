@@ -54,6 +54,10 @@ func (m *movieService) Create(cmd *CreateMovieCommand) (*Movie, error) {
 }
 
 func (m *movieService) Update(cmd *UpdateMovieCommand) (*Movie, error) {
+	_, err := m.store.Get(cmd.Id)
+	if err != nil {
+		return nil, err
+	}
 	movieUpdate := &Movie{}
 	if cmd.Name != nil {
 		movieUpdate.Name = *cmd.Name
