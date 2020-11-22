@@ -61,7 +61,7 @@ func (m *movieService) Update(cmd *UpdateMovieCommand) (*Movie, error) {
 	if cmd.Rating != nil {
 		movieUpdate.Rating = *cmd.Rating
 	}
-	if cmd.Id == 0 {
+	if cmd.Id != 0 {
 		movieUpdate.Id = cmd.Id
 	}
 	updatedMovie, err := m.store.Update(movieUpdate)
@@ -72,9 +72,6 @@ func (m *movieService) Update(cmd *UpdateMovieCommand) (*Movie, error) {
 }
 
 func (m *movieService) Delete(cmd *DeleteMovieCommand) (*Movie, error) {
-	if cmd.Id == 0 {
-		return nil, errors.New("id is empty")
-	}
 	movie, err := m.store.Get(cmd.Id)
 	if err != nil {
 		return nil, err
